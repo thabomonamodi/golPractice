@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class Structure extends javax.swing.JFrame
 {
-        final int wid = 10, hei = 10;
-        boolean[][] currentMove = new boolean[hei][wid], nextMove = new boolean[hei][wid];
+        final int width = 10, height = 10;
+        boolean[][] currentMove = new boolean[height][width], nextMove = new boolean[height][width];
         boolean play;
         Image offScrImg;
         Graphics offScrGraph;
@@ -17,7 +17,7 @@ public class Structure extends javax.swing.JFrame
         public Structure()
         {
             initComponents();
-            offScrImg = createImage(jPanel1.getWidth(), jPanel1.getHeight());
+            offScrImg = createImage(panel1.getWidth(), panel1.getHeight());
             offScrGraph = offScrImg.getGraphics();
             Timer time = new Timer();
             TimerTask task = new TimerTask()
@@ -26,15 +26,15 @@ public class Structure extends javax.swing.JFrame
                 {
                     if(play)
                     {
-                        for(int i = 0; i < hei; i++)
+                        for(int i = 0; i < height; i++)
                         {
-                            for(int j = 0; j < wid; j++)
+                            for(int j = 0; j < width; j++)
                             {
                                 nextMove[i][j] = decide(i,j);
                             }
                         }
-                        for(int i = 0; i < hei; i++){
-                            for(int j = 0; j < wid; j++)
+                        for(int i = 0; i < height; i++){
+                            for(int j = 0; j < width; j++)
                             {
                                 currentMove[i][j] = nextMove[i][j];
                             }
@@ -53,15 +53,15 @@ public class Structure extends javax.swing.JFrame
             if(j > 0){
                 if(currentMove[i][j-1]) neighbors++;
                 if(i>0) if(currentMove[i-1][j-1]) neighbors++;
-                if(i<hei-1) if(currentMove[i+1][j-1]) neighbors++;
+                if(i<height-1) if(currentMove[i+1][j-1]) neighbors++;
             }
-            if(j < wid-1){
+            if(j < width-1){
                 if(currentMove[i][j+1]) neighbors++;
                 if(i>0) if(currentMove[i-1][j+1]) neighbors++;
-                if(i<hei-1) if(currentMove[i+1][j+1]) neighbors++;
+                if(i<height-1) if(currentMove[i+1][j+1]) neighbors++;
             }
             if(i>0) if(currentMove[i-1][j]) neighbors++;
-            if(i<hei-1) if(currentMove[i+1][j]) neighbors++;
+            if(i<height-1) if(currentMove[i+1][j]) neighbors++;
             if(neighbors == 3) return true;
             if(currentMove[i][j] && neighbors == 2) return true;
             return false;
@@ -69,60 +69,60 @@ public class Structure extends javax.swing.JFrame
 
         private void repain()
         {
-            offScrGraph.setColor(jPanel1.getBackground());
-            offScrGraph.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-            for(int i = 0 ; i < hei ; i++)
+            offScrGraph.setColor(panel1.getBackground());
+            offScrGraph.fillRect(0, 0, panel1.getWidth(), panel1.getHeight());
+            for(int i = 0 ; i < height ; i++)
             {
-                for(int j = 0 ; j < wid; j++)
+                for(int j = 0 ; j < width; j++)
                 {
                     if(currentMove[i][j])
                     {
-                        offScrGraph.setColor(Color.YELLOW);
-                        int x = j * jPanel1.getWidth()/wid;
-                        int y = i * jPanel1.getHeight()/hei;
-                        offScrGraph.fillRect(x, y, jPanel1.getWidth()/wid, jPanel1.getHeight()/hei);
+                        offScrGraph.setColor(Color.white);
+                        int x = j * panel1.getWidth()/width;
+                        int y = i * panel1.getHeight()/height;
+                        offScrGraph.fillRect(x, y, panel1.getWidth()/width, panel1.getHeight()/height);
                     }
                 }
             }
-            offScrGraph.setColor(Color.BLACK);
-            for(int i = 1; i < hei;i++)
+            offScrGraph.setColor(Color.black);
+            for(int i = 1; i < height;i++)
             {
-                int y = i * jPanel1.getHeight()/hei;
-                offScrGraph.drawLine(0, y, jPanel1.getWidth(), y);
+                int y = i * panel1.getHeight()/height;
+                offScrGraph.drawLine(0, y, panel1.getWidth(), y);
             }
-            for(int j = 1; j < wid;j++)
+            for(int j = 1; j < width;j++)
             {
-                int x = j * jPanel1.getWidth()/wid;
-                offScrGraph.drawLine(x, 0, x, jPanel1.getHeight());
+                int x = j * panel1.getWidth()/width;
+                offScrGraph.drawLine(x, 0, x, panel1.getHeight());
             }
-            jPanel1.getGraphics().drawImage(offScrImg, 0, 0, jPanel1);
+            panel1.getGraphics().drawImage(offScrImg, 0, 0, panel1);
         }
 
         @SuppressWarnings("unchecked")
         private void initComponents() {
 
-            jPanel1 = new javax.swing.JPanel();
+            panel1 = new javax.swing.JPanel();
             jButton1 = new javax.swing.JButton();
             jButton2 = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-            jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-            jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+            panel1.setBackground(new java.awt.Color(102, 102, 102));
+            panel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
             {
                 public void mouseDragged(java.awt.event.MouseEvent evt)
                 {
                     jPanel1MouseDragged(evt);
                 }
             });
-            jPanel1.addMouseListener(new java.awt.event.MouseAdapter()
+            panel1.addMouseListener(new java.awt.event.MouseAdapter()
             {
                 public void mouseClicked(java.awt.event.MouseEvent evt)
                 {
                     jPanel1MouseClicked(evt);
                 }
             });
-            jPanel1.addComponentListener(new java.awt.event.ComponentAdapter()
+            panel1.addComponentListener(new java.awt.event.ComponentAdapter()
             {
                 public void componentResized(java.awt.event.ComponentEvent evt)
                 {
@@ -130,8 +130,8 @@ public class Structure extends javax.swing.JFrame
                 }
             });
 
-            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-            jPanel1.setLayout(jPanel1Layout);
+            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panel1);
+            panel1.setLayout(jPanel1Layout);
             jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGap(0, 0, Short.MAX_VALUE)
             );
@@ -164,7 +164,7 @@ public class Structure extends javax.swing.JFrame
                             .addGroup(layout.createSequentialGroup()
                                     .addContainerGap()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
                                                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
@@ -175,7 +175,7 @@ public class Structure extends javax.swing.JFrame
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                     .addContainerGap()
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jButton1)
@@ -192,7 +192,7 @@ public class Structure extends javax.swing.JFrame
 
         private void jPanel1ComponentResized(java.awt.event.ComponentEvent evt)
         {
-            offScrImg = createImage(jPanel1.getWidth(), jPanel1.getHeight());
+            offScrImg = createImage(panel1.getWidth(), panel1.getHeight());
             offScrGraph = offScrImg.getGraphics();
             repain();
         }
@@ -207,14 +207,14 @@ public class Structure extends javax.swing.JFrame
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
         {
-            currentMove = new boolean[hei][wid];
+            currentMove = new boolean[height][width];
             repain();
         }
 
         private void jPanel1MouseDragged(java.awt.event.MouseEvent evt)
         {
-            int j = wid * evt.getX() / jPanel1.getWidth();
-            int i = hei * evt.getY() / jPanel1.getHeight();
+            int j = width * evt.getX() / panel1.getWidth();
+            int i = height * evt.getY() / panel1.getHeight();
             if(SwingUtilities.isLeftMouseButton(evt))
             {
                 currentMove[i][j] = true;
@@ -260,8 +260,7 @@ public class Structure extends javax.swing.JFrame
                 }
             });
         }
-
-        private javax.swing.JButton jButton1;
-        private javax.swing.JButton jButton2;
-        private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton1, jButton2;
+    //private javax.swing.JButton jButton2;
+    private javax.swing.JPanel panel1;
 }
